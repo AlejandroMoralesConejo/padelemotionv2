@@ -1,0 +1,99 @@
+{% extends "plantilla.base.php.twig" %}
+
+{% block contenido %}
+    <!-- logotipo -->
+    <div class="row">
+        <div class="col-sd-12 mx-auto">
+            <img class="logo" src="img/padelemotion.png" alt="FlixNet" />
+        </div>
+    </div>
+
+    <!-- nota -->
+    <div class="row">
+        <div class="col-sd-12 mx-auto mb-5">
+            <h4>Registro de Usuarios</h4>
+        </div>
+    </div>
+
+    
+    {% if error != false %}
+        <div class="alert alert-danger w-50 mx-auto">{{ error }}</div>
+    {% endif %}
+
+
+    <!-- formulario de registro -->
+    <form method="post">
+        
+        <!-- nombre de usuario -->
+        <div class="row form-group">
+            <div class="col-md-4 mx-auto">
+                <label class="col-form-label" for="email">Correo electrónico:</label>
+                <input class="form-control" type="email" name="email" 
+                        placeholder="correo electrónico" required />
+            </div>
+        </div>
+
+        <!-- nombre -->
+        <div class="row form-group">
+            <div class="col-md-4 mx-auto">
+                <label class="col-form-label" for="nombre">Nombre:</label>
+                <input class="form-control" type="text" name="nombre" required />
+            </div>
+        </div>
+
+        <!-- posicion -->
+        <div class="row form-group">
+            <div class="col-md-4 mx-auto">
+                <label class="col-form-label" for="posicion">Posición:</label>
+                <!--<input class="form-control" type="text" name="posicion" required />-->
+                <select class="form-control" name="posicion" required>
+                    <option selected value="">Elige una opción</option> 
+                    <option value="derecha">Derecha</option> 
+                    <option value="reves">Revés</option>
+                    <option value="ambos">Ambos</option> 
+                </select>
+            </div>
+        </div>
+
+        <!-- contraseña -->
+        <div class="row form-group">
+            <div class="col-md-4 mx-auto">
+                <label class="col-form-label" for="pass">Contraseña:</label>
+                <input class="form-control" type="password" name="pass" 
+                        required />
+            </div>
+        </div>
+
+        <!-- confirmación contraseña -->
+        <div class="row form-group">
+            <div class="col-md-4 mx-auto">
+                <label class="col-form-label" for="conf">Confirmación contraseña:</label>
+                <input class="form-control" type="password" name="conf" 
+                        required />
+            </div>
+        </div>
+
+        <!-- fecha de nacimiento -->
+        <div class="row form-group">
+            <div class="col-md-4 mx-auto">
+                <label class="col-form-label" for="fnac">Fecha de Nacimiento:</label>
+                <input class="form-control" type="date" name="fnac" />
+            </div>
+        </div>
+
+        <!-- registro -->
+        <div class="row">
+            <div class="col-md-4 mx-auto">
+                <button class="btn btn-primary w-100" type="submit">Registrar</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- volver atrás -->
+    <div class="row">
+        <div class="col-md-4 mx-auto text-center">
+            <a href="http://localhost/pademotion" class="btn btn-link">Volver atrás</a>
+        </div>
+    </div>
+
+{% endblock %}

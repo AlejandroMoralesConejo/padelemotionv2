@@ -1,0 +1,165 @@
+{% extends "plantilla.base.php.twig" %}
+
+{% block nav %}
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-white">
+		<a class="navbar-brand font-weight-bold text-primary" href="index.php">Padelemotion</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+			<!--<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+				<a class="nav-link" href="main.php">Torneos
+					<span class="sr-only">(current)</span>
+				</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="#">Jugadores</a>
+				</li>
+			</ul>-->
+			<ul class="navbar-nav ml-auto nav-flex-icons bg-primary">
+				<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user"></i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+					<a class="dropdown-item" href="?con=jugador&ope=edit">Ver perfil</a>
+					<a class="dropdown-item" href="?con=login&ope=logout">Salir</a>
+				</div>
+				</li>
+			</ul>
+		</div>
+		
+	</nav>
+{% endblock %}
+
+{% block contenido %}
+    <div id="fila" class="row">
+        <div class="card w-100 hoverable my-5 bg-white">
+            {# Encabezado con fecha #}
+            <div class="card-header bg-light">
+                <div class="row">
+                    <div class="h5 col-md-4">
+                        {% if partido.dia == 'Monday' %}
+                            <strong>Lunes</strong>,
+                        {% elseif partido.dia == 'Tuesday' %}
+                            <strong>Martes</strong>,
+                        {% elseif partido.dia == 'Wednesday' %}
+                            <strong>Miércoles</strong>,
+                        {% elseif partido.dia == 'Thursday' %}
+                            <strong>Jueves</strong>,
+                        {% elseif partido.dia == 'Friday' %}
+                            <strong>Viernes</strong>,
+                        {% elseif partido.dia == 'Saturday' %}
+                            <strong>Sábado</strong>,
+                        {% else %}
+                            <strong>Domingo</strong>,
+                        {% endif %}{{ partido.fechaOrdenada }}
+                    </div>
+                    <div class="h2 col-md-4 text-center">{{ partido.nombre }}</div>
+                    <div class="h5 col-md-4 text-right"><i class="far fa-clock"></i> {{ partido.hora }}</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {# Si no hay jugadores apuntados #}
+                    {% if jugadores|length == 0 %}
+                        {% for i in 0..3 %}
+                            <div class="col-md-2 text-center">
+                                <img src="img/default.png" class="img-thumbnail"><hr>
+                                Plaza libre
+                            </div>
+                            {% set i = i + 1 %}
+                            {% if i == 2 %}
+                            <div class="col-md-4 text-center">
+                                <p class="h1 text-center text-primary">VS</p>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {# Si hay 1 jugador #}
+                    {% elseif jugadores|length == 1 %}
+                        {% for jug in jugadores %}
+                        <div class="col-md-2 text-center">
+                            <img src="{{ jug.foto }}" class="img-thumbnail"><hr>
+                            {{ jug.nombreJ }}<br>{{ jug.posicion }}
+                        </div>
+                        {% endfor %}
+                        {% for i in 0..2 %}
+                            <div class="col-md-2 text-center">
+                                <img src="img/default.png" class="img-thumbnail"><hr>
+                                Plaza libre
+                            </div>
+                            {% set i = i + 1 %}
+                            {% if i == 1 %}
+                            <div class="col-md-4 text-center">
+                                <p class="h1 text-center text-primary">VS</p>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {# Si hay 2 jugadores #}
+                    {% elseif jugadores|length == 2 %}
+                        {% for jug in jugadores %}
+                            <div class="col-md-2 text-center">
+                                <img src="{{ jug.foto }}" class="img-thumbnail"><hr>
+                                {{ jug.nombreJ }}<br>{{ jug.posicion }}
+                            </div>
+                        {% endfor %}
+                        <div class="col-md-4 text-center">
+                            <p class="h1 text-center text-primary">VS</p>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <img src="img/default.png" class="img-thumbnail"><hr>
+                            Plaza libre
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <img src="img/default.png" class="img-thumbnail"><hr>
+                            Plaza libre
+                        </div>
+                    {# Si hay 3 o 4 jugadores #}
+                    {% else %}
+                        {% set i = 0 %}
+                        {% for jug in jugadores %}
+                            
+                            <div class="col-md-2 text-center">
+                                <img src="{{ jug.foto }}" class="img-thumbnail"><hr>
+                                {{ jug.nombreJ }}<br>{{ jug.posicion }}
+                            </div>
+                            {% set i = i + 1 %}
+                            {% if i == 2 %}
+                                <div class="col-md-4 text-center">
+                                    <p class="h1 text-center text-primary">VS</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if jugadores|length == 3 %}
+                        <div class="col-md-2 text-center">
+                            <img src="img/default.png" class="img-thumbnail"><hr>
+                            Plaza libre
+                        </div>
+                        {% endif %}
+                    {# Si hay 4
+                    {% else %}
+                        {% set i = 0 %}
+                        {% for jug in jugadores %}
+                            
+                            <div class="col-md-2 text-center">
+                                <img src="{{ jug.foto }}" class="img-thumbnail"><hr>
+                                {{ jug.nombreJ }}<br>{{ jug.posicion }}
+                            </div>
+                            {% set i = i + 1 %}
+                            {% if i == 2 %}
+                                <div class="col-md-4 text-center">
+                                    <p class="h1 text-center text-primary">VS</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %} #}
+                    {% endif %}
+
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

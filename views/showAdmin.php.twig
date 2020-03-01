@@ -1,0 +1,98 @@
+{% extends "plantilla.base.php.twig" %}
+
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#buscador").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+    </script>
+
+{% endblock %}
+{% block nav %}
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-white">
+		<a class="navbar-brand font-weight-bold text-primary" href="index.php">Padelemotion</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+			<!--<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+				<a class="nav-link" href="main.php">Torneos
+					<span class="sr-only">(current)</span>
+				</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="#">Jugadores</a>
+				</li>
+			</ul>-->
+			<ul class="navbar-nav ml-auto nav-flex-icons bg-primary">
+				<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user"></i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+					<a class="dropdown-item" href="?con=jugador&ope=edit">Ver perfil</a>
+					<a class="dropdown-item" href="?con=login&ope=logout">Salir</a>
+				</div>
+				</li>
+			</ul>
+		</div>
+		
+	</nav>
+{% endblock %}
+{% block contenido %}
+    <div class="alert alert-primary my-4" role="alert">
+        <input class="form-control mx-1 my-2" id="buscador" type="text" placeholder="Busca tu partido. Prueba con día, hora, nombre, pista..."/>
+    </div>
+    <a href="index.php?con=admin&ope=add"><button type="button" class="btn btn-light"><i class="fa fa-plus" aria-hidden="true"></i> Añadir partido</button></a>
+    <table class="table table-striped table-light">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Hora</th>
+            <th scope="col">Jugadores apuntados</th>
+            <th scope="col">Pista</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for partido in data %}
+            <tr>
+                <th scope="row">{{ partido.idPartido }}</th>
+                <td>{{ partido.nombre }}</td>
+                <td>{% if partido.dia == 'Monday' %}
+                            <strong>Lunes</strong>,
+                        {% elseif partido.dia == 'Tuesday' %}
+                            <strong>Martes</strong>,
+                        {% elseif partido.dia == 'Wednesday' %}
+                            <strong>Miércoles</strong>,
+                        {% elseif partido.dia == 'Thursday' %}
+                            <strong>Jueves</strong>,
+                        {% elseif partido.dia == 'Friday' %}
+                            <strong>Viernes</strong>,
+                        {% elseif partido.dia == 'Saturday' %}
+                            <strong>Sábado</strong>,
+                        {% else %}
+                            <strong>Domingo</strong>,
+                        {% endif %}{{ partido.fecha }}</td>
+                <td>{{ partido.hora }}</td>
+                <td>{{ partido.limite }}</td>
+                <td>{{ partido.nombreP }}</td>
+                <td>
+                    <a href="index.php?con=admin&ope=edit&id={{ partido.idPartido }}"><i class="fas fa-edit fa-lg"></i></a>
+                    <a href="index.php?con=admin&ope=delete&id={{ partido.idPartido }}"><i class="far fa-trash-alt fa-lg"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}

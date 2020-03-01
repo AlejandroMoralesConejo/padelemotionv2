@@ -1,0 +1,42 @@
+{% extends "plantilla.base.php.twig" %}
+{% block contenido %}
+    <h1 class="h1 mt-4">Editar partido</h1>
+
+    <form action="" method="get">
+        <input type="hidden" name="con" value="admin" />
+        <input type="hidden" name="ope" value="edit" />
+        <input type="hidden" name="id" value="{{ data.idPartido }}" />
+        
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ data.nombre }}">
+        </div>
+        <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" class="form-control" id="fecha" name="fecha" value="{{ data.fecha }}">
+        </div>
+        <div class="form-group">
+            <label for="hora">Hora</label>
+            <input type="time" class="form-control" id="hora" name="hora" value="{{ data.hora }}">
+        </div>
+          <div class="form-group">
+            <label for="idPista">Pista</label>
+            <select class="form-control" id="idPista" name="idPista">
+                <option value="{{ data.idPista }}"selected>
+                {% for nombrePista in pista %}
+                    {% if data.idPista == nombrePista.idPista %}
+                        {{ nombrePista.nombreP }}
+                    {% endif %}
+                {% endfor %}
+                </option>
+                {% for pist in pista %}
+                    {% if data.idPista != pist.idPista %}
+                        <option value="{{ pist.idPista }}">{{ pist.nombreP }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        <a href="index.php"><button class="btn btn-light">Volver atrás</button></a>
+    </form>
+{% endblock %}

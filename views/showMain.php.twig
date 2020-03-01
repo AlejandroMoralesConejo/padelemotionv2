@@ -1,0 +1,132 @@
+{% extends "plantilla.base.php.twig" %}
+
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#buscador").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#fila .card").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+    </script>
+
+{% endblock %}
+{% block nav %}
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-white">
+		<a class="navbar-brand font-weight-bold text-primary" href="index.php">Padelemotion</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333" aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+			<!--<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+				<a class="nav-link" href="main.php">Torneos
+					<span class="sr-only">(current)</span>
+				</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="#">Jugadores</a>
+				</li>
+			</ul>-->
+			<ul class="navbar-nav ml-auto nav-flex-icons bg-primary">
+				<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user"></i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+					<a class="dropdown-item" href="?con=jugador&ope=edit">Ver perfil</a>
+					<a class="dropdown-item" href="?con=login&ope=logout">Salir</a>
+				</div>
+				</li>
+			</ul>
+		</div>
+		
+	</nav>
+{% endblock %}
+{% block contenido %}
+    <div class="alert alert-primary my-4" role="alert">
+        <input class="form-control mx-1 my-2" id="buscador" type="text" placeholder="Busca tu partido. Prueba con día, hora, nombre, pista..."/>
+    </div>
+    {% for torneo in data %}
+
+        <div id="fila" class="row">
+            <div class="card w-100 hoverable mb-3 bg-white">
+                {# Encabezado con fecha #}
+                <div class="card-header">
+                    <div class="float-left">
+                        {% if torneo.dia == 'Monday' %}
+                            <strong>Lunes</strong>,
+                        {% elseif torneo.dia == 'Tuesday' %}
+                            <strong>Martes</strong>,
+                        {% elseif torneo.dia == 'Wednesday' %}
+                            <strong>Miércoles</strong>,
+                        {% elseif torneo.dia == 'Thursday' %}
+                            <strong>Jueves</strong>,
+                        {% elseif torneo.dia == 'Friday' %}
+                            <strong>Viernes</strong>,
+                        {% elseif torneo.dia == 'Saturday' %}
+                            <strong>Sábado</strong>,
+                        {% else %}
+                            <strong>Domingo</strong>,
+                        {% endif %}{{ torneo.fecha }}
+                    </div>
+                    <div class="float-right"><i class="far fa-clock"></i> {{ torneo.hora }}</div>
+                </div>
+                {# Cuerpo del torneo #}
+                <div class="card-body">
+                    <div class="row">
+                        {# Imagen cartel #}
+                        <div class="col-md-4 offset-md-1 mx-3 my-3">
+                            {# <div class="view overlay">
+                                <img src="{{ torneo.foto }}" class="img-fluid" alt="Cartel del torneo">
+                            </div> #}
+                            <h2 class="h2 mb-5">{{ torneo.nombre }}</h2>
+                            <h5 class="h5 mb-3"><i class="fas fa-thumbtack"></i> Pista {{ torneo.nombreP }}</h5>
+                            <h5 class="h5 mb-1"><i class="fas fa-map-marker-alt"></i> {{ torneo.direccionP }}</h5>
+                            
+
+                        </div>
+                        {# Nombre y pista #}
+                        <div class="col-md-6 offset-md-1 mx-3 my-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {# Botón apuntarse a torneo #}
+                                    <form action="" method="get">
+                                        <input type="hidden" name="con" value="partido"/>
+                                        <input type="hidden" name="ope" value="add"/>
+                                        <input type="hidden" name="limite" value="{{ torneo.limite }}"/>
+                                        <input type="hidden" name="idPartido" value="{{ torneo.idPartido }}"/>
+                                        <input type="hidden" name="idJugador" value="{{ idJugador }}"/>
+
+                                        <button id="boton" type="submit" class="btn btn-primary" {% if torneo.limite == 4 or (idPart == torneo.idPartido) %}disabled{% endif %}>
+                                            {% if idPart == torneo.idPartido %}Ya estás apuntado{% else %}Apúntate{% endif %}
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="index.php?con=partido&ope=mostrar&id={{ torneo.idPartido }}"><button class="btn btn-light">Ver contrincantes</button></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 offset-md-1 mx-3 my-3">
+                                <hr>
+                                    {% if torneo.limite == 3 %}
+                                        <h3>Queda 1 plaza para cerrar el partido.</h3>
+                                    {% elseif torneo.limite == 4 %}
+                                        <h3 class="text-danger">Partido cerrado.</h3>
+                                    {% else %}
+                                        <h3>Quedan {{ 4-(torneo.limite) }} plazas para cerrar el partido.</h3>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}
