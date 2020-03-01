@@ -26,5 +26,5 @@ Usuario **admin**: admin@admin.com | contraseña: 123
 * Botón de Añadir partido.
 * En cada partido, opción de editar y borrar.
 
-## Vídeo sobre el proyecto.
+## Vídeo sobre el proyecto
 [![Padelemotion](https://img.youtube.com/vi/jjoQpxVHqgY/0.jpg)](https://www.youtube.com/watch?v=jjoQpxVHqgY)
