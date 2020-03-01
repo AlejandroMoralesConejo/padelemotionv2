@@ -8,8 +8,8 @@ Padelemotion es una web de pádel, a nivel amateur, para apuntarse a partidos. E
 * Instalar twig en nuestro proyecto.
 
 ## Manual de uso 📖
-* Primero debemos hacer login o registrarnos.
-Usuario **normal**: fff@gmail.com | contraseña: 123
+* Primero debemos hacer login o registrarnos.<br/>
+Usuario **normal**: fff@gmail.com | contraseña: 123<br/>
 Usuario **admin**: admin@admin.com | contraseña: 123
 
 ### Ambos usuarios
@@ -26,4 +26,5 @@ Usuario **admin**: admin@admin.com | contraseña: 123
 * Botón de Añadir partido.
 * En cada partido, opción de editar y borrar.
 
-<video src="Padelemotion.mp4" type="video/mp4" />
+## Vídeo sobre el proyecto.
+[![Padelemotion](https://img.youtube.com/vi/jjoQpxVHqgY/0.jpg)](https://www.youtube.com/watch?v=jjoQpxVHqgY)
