@@ -26,4 +26,4 @@ Usuario **admin**: admin@admin.com | contraseña: 123
 * Botón de Añadir partido.
 * En cada partido, opción de editar y borrar.
 
-<source src="Padelemotion.mp4" type="video/mp4" />
+<video src="Padelemotion.mp4" type="video/mp4" />
