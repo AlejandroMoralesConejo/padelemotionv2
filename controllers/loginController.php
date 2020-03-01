@@ -48,8 +48,11 @@ class loginController extends BaseController
 
             //comprobamos si es admin
             $existe = $ses->login($email, $pass);
-            $idUsu = $ses->getUsuario();
-            $usuario = Jugador::find($idUsu);
+            if ($existe)
+            {
+                $idUsu = $ses->getUsuario();
+                $usuario = Jugador::find($idUsu);
+            }
             // si el usuario existe redigirimos al main
             if ($existe && ($usuario->getPerfil()==1)) {
                 $this->goMainAdmin();

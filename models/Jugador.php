@@ -158,7 +158,7 @@ class Jugador
 		{
 			// insert
 			$db->query("INSERT INTO jugador (email, pass, nombreJ, fec_nacimiento, posicion)
-            VALUES ('{$this->email}',MD5($this->pass),'{$this->nombre}','{$this->fec_nacimiento}',
+            VALUES ('{$this->email}',MD5($this->pass),'{$this->nombreJ}','{$this->fec_nacimiento}',
 			'{$this->posicion}');");
 			$this->idJug = $db->lastId();
 		} else {

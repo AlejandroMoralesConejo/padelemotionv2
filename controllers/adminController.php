@@ -34,4 +34,39 @@
                 header("location: index.php");
             }
         }
+
+        public function edit()
+        {
+            $data = Partido::find($_GET["id"]);
+            $pista = Pista::findAll();
+
+            if (empty($_GET["nombre"]))
+            {
+                echo $this->twig->render("editPartido.php.twig", (['data' => $data, 'pista' => $pista]));
+            } else {
+                $nombre = $_GET["nombre"];
+                $fecha = $_GET["fecha"];
+                $hora = $_GET["hora"];
+                $idPista = $_GET["idPista"];
+
+                $data->setNombre($nombre);
+                $data->setFecha($fecha);
+                $data->setHora($hora);
+                $data->setIdPista($idPista);
+
+                $data->guardar();
+
+                header("location: index.php");
+            }
+        }
+
+        public function delete()
+        {
+            $id = $_GET["id"];
+            $partido = Partido::find($id);
+            $partido->delete();
+
+            header("location: index.php");
+
+        }
     }

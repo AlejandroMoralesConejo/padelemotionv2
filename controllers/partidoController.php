@@ -30,4 +30,12 @@ class partidoController extends BaseController
         
     }
 
+    public function mostrar()
+    {
+        $idPartido = $_GET["id"];
+        $partido = Partido::find($idPartido);
+        $jugadores = Partido::findJugadores($idPartido);
+        echo $this->twig->render("showPartido.php.twig", (['partido' => $partido, 'jugadores' => $jugadores]));
+    }
+
 }

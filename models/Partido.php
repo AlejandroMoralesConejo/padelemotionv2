@@ -1,6 +1,7 @@
 <?php
 
 require_once "libs/Database.php";
+require_once "Jugador.php";
 
 class Partido
 {
@@ -102,6 +103,15 @@ class Partido
 		return $this->nombre;
 	}
 
+	public static function find($id)
+	{
+		$sql = "SELECT idPartido, nombre, fecha, DATE_FORMAT(fecha,'%d/%m/%Y') as fechaOrdenada, DAYNAME(fecha) as dia,
+		 hora, idPista FROM partido WHERE idPartido=$id;";
+		$db = Database::getInstance();
+		$db->query($sql);
+		return $db->getObject("Partido");
+	}
+
 	public static function findAll()
 	{
 		$sql = "SELECT * FROM (SELECT p.idPartido, p.nombre, p.fecha as fechaOrden, DATE_FORMAT(p.fecha,'%d/%m/%Y') as fecha, DAYNAME(p.fecha) as dia,
@@ -139,8 +149,8 @@ class Partido
 		{
 			// insert
 			$db->query("INSERT INTO partido (nombre, fecha, hora, idPista)
-            VALUES ('{$this->nombre}','{$this->fecha}','{$this->hora}', {$this->idPista});");
-			$this->idJug = $db->lastId();
+            VALUES ('{$this->nombre}', '{$this->fecha}','{$this->hora}', {$this->idPista});");
+			$this->idPartido = $db->lastId();
 		} else {
 			// update
 			$db->query("UPDATE partido SET nombre='{$this->nombre}', fecha='{$this->fecha}',
@@ -148,6 +158,23 @@ class Partido
 		}
 	}
 
+	public function delete()
+	{
+		$db = Database::getInstance();
+		$db->query("DELETE FROM partido WHERE idPartido=$this->idPartido");
+	}
+
+	public static function findJugadores($id)
+	{
+		$db = Database::getInstance();
+		$sql = "SELECT j.nombreJ, j.posicion, j.foto FROM jugador j, partido_jugador x WHERE x.idPartido=$id AND j.idJug=x.idJug;";
+		$db->query($sql);
+		$listado = [];
+		while ($jugador = $db->getObject("Jugador"))
+			array_push($listado, $jugador);
+
+		return $listado;
+	}
 }
 
 	
