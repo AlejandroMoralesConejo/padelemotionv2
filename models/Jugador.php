@@ -146,7 +146,7 @@ class Jugador
 	public static function find($id)
 	{
 		$db = Database::getInstance();
-		$db->query("SELECT * FROM jugador WHERE idJug = $id");
+		$db->query("SELECT idJug, email, nombreJ, DATE_FORMAT(fec_nacimiento,'%Y-%m-%d') as fec_nacimientos, posicion, foto, perfil FROM jugador WHERE idJug = $id");
 		return $db->getObject("Jugador");
 	}
 

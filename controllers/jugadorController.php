@@ -51,7 +51,7 @@ class jugadorController extends BaseController
             // } else {
             //     $this->error2 = true;
             // }
-            $dat = Jugador::find($sesion->getUsuario());
+            // $dat = Jugador::find($sesion->getUsuario());
             echo $this->twig->render("showProfile.php.twig", (['dat' => $dat, 'error' => $this->error2]));
         }
     }
